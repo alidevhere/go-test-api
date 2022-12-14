@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//Mohammad Ali Ashraf
+//Name : Mohammad Ali Ashraf
 //ranaaliashraf12@gmail.com
 func Hello(c *gin.Context) {
 	name := c.Query("name")
