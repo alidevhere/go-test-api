@@ -9,6 +9,7 @@ import (
 
 // Github Actions repo
 //Mohammad Ali Ashraf
+//ranaaliashraf12@gmail.com
 func Hello(c *gin.Context) {
 	name := c.Query("name")
 	if name == "" {
