@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Github Actions repo
 //Mohammad Ali Ashraf
 //ranaaliashraf12@gmail.com
 func Hello(c *gin.Context) {
