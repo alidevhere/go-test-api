@@ -23,8 +23,3 @@ jobs:
 
       - name: test-code
         run: go test -v
-      
-      - name: run-code
-        run: go run main.go
-
-
