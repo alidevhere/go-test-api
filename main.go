@@ -3,18 +3,29 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func Hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello From Api")
-	fmt.Println("Got Hit...")
+func Hello(c *gin.Context) {
+	name := c.Query("name")
+	if name == "" {
+		name = "Annonymous user"
+	}
+	c.JSON(http.StatusOK, fmt.Sprintf("Hello %s !!", name))
 }
 
-func HandleRequests() {
-	http.HandleFunc("/", Hello)
-	fmt.Println("Listening on port 8000")
-	http.ListenAndServe(":8000", nil)
+func SetupRouter(v ...any) *gin.Engine {
+	var router *gin.Engine
+	if len(v) > 0 && v[0] == "test" {
+		gin.SetMode(gin.TestMode)
+	}
+
+	router = gin.Default()
+	router.Handle("GET", "/login", Hello)
+	return router
 }
 func main() {
-	HandleRequests()
+	r := SetupRouter()
+	r.Run(":8000")
 }

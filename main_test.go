@@ -3,28 +3,32 @@ package main
 import (
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestHello(t *testing.T) {
 
-	req, err := http.NewRequest("", "/", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	r := SetupRouter("test")
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(Hello)
-	handler.ServeHTTP(rr, req)
+	//Test 1
+	u := url.Values{}
+	u.Add("name", "Ali")
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/login", nil)
+	req.URL.RawQuery = u.Encode()
+	r.ServeHTTP(w, req)
+	// Result 1
+	assert.Equal(t, 200, w.Code)
+	assert.Equal(t, `"Hello Ali !!"`, w.Body.String())
 
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
-	}
-
-	expected := `Hello From Api`
-	if rr.Body.String() != expected {
-		t.Errorf("handler returned unexpected body: got %v want %v",
-			rr.Body.String(), expected)
-	}
+	//Test 2
+	req2, _ := http.NewRequest("GET", "/login", nil)
+	w2 := httptest.NewRecorder()
+	r.ServeHTTP(w2, req2)
+	//Result 2
+	assert.Equal(t, 200, w2.Code)
+	assert.Equal(t, `"Hello Annonymous user !!"`, w2.Body.String())
 }
