@@ -9,8 +9,12 @@ func Hello(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello From Api")
 	fmt.Println("Got Hit...")
 }
-func main() {
+
+func HandleRequests() {
 	http.HandleFunc("/", Hello)
 	fmt.Println("Listening on port 8000")
 	http.ListenAndServe(":8000", nil)
+}
+func main() {
+	HandleRequests()
 }
