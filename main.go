@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//Mohammad Ali Ashraf
 func Hello(c *gin.Context) {
 	name := c.Query("name")
 	if name == "" {
